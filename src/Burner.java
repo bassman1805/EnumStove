@@ -1,6 +1,6 @@
 public class Burner {
 	public enum Temperature{
-		BLAZING ("VERY HOT! DON'T TOUCH!"), HOT ("CAREFUL"), WARM ("warm"), COLD ("coooooool");
+		BLAZING ("VERY HOT! DON'T TOUCH!"), HOT ("CAREFUL"), WARM ("warm"), COLD ("cooool");
 		private String value;
 		
 		Temperature(String value_){

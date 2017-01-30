@@ -20,9 +20,9 @@ public class Stove {
 		boolean hot = false;
 		for(Burner b:burners){
 			b.display();
-			//if(b.getTemp() == Temperature.HOT || b.getTemp() == Temperature.BLAZING){
-			//	hot = true;
-			//}
+			if(b.getTemp() == Burner.Temperature.BLAZING){
+				hot = true;
+			}
 		}
 		if(hot){
 			System.out.println("RED LIGHT - HOT BURNER ALERT!");
