@@ -27,6 +27,77 @@ public class Burner {
 				//do nothing
 		}
 	}
+	
+	//Rather than rewrite this a ton in updateTemperature
+	public void plusTemp(){
+		switch(myTemperature){
+			case COLD:
+				myTemperature = Temperature.WARM;
+				break;
+			case WARM:
+				myTemperature = Temperature.HOT;
+				break;
+			case HOT:
+				myTemperature = Temperature.BLAZING;
+				break;
+			default:
+				//do nothing
+		}
+	}
+		public void minusTemp(){
+			switch(myTemperature){
+				case BLAZING:
+					myTemperature = Temperature.HOT;
+					break;
+				case HOT:
+					myTemperature = Temperature.WARM;
+					break;
+				case WARM:
+					myTemperature = Temperature.COLD;
+					break;
+				default:
+					//do nothing
+			}
+		}
+	
+	
+	public void updateTemperature(){
+		if(timer != 0){ //tick down timer if it's not run out
+			timer --;
+		}
+		else{
+			switch(mySetting){
+				case HIGH:
+					if(myTemperature != Temperature.BLAZING){
+						plusTemp();
+						if(myTemperature != Temperature.BLAZING){
+							this.timer = TIME_DURATION;
+						}
+					}
+					break;
+				case MEDIUM:
+					if(myTemperature != Temperature.HOT){
+						plusTemp();
+						if(myTemperature != Temperature.HOT){
+							this.timer = TIME_DURATION;
+						}
+					}
+					break;
+				case LOW:
+					if(myTemperature != Temperature.WARM){
+						plusTemp();
+						if(myTemperature != Temperature.WARM){
+							this.timer = TIME_DURATION;
+						}
+					}
+					break;
+				default:
+					//do nothing
+			}
+		}
+	}
+	
+	
 	public void minusButton(){
 		switch(mySetting){
 			case HIGH:
