@@ -1,6 +1,6 @@
 public class Burner {
 	public enum Temperature{
-		BLAZING ("VERY HOT! DON'T TOUCH!"), HOT ("CAREFUL"), WARM ("Warm"), COLD ("coooooool");
+		BLAZING ("VERY HOT! DON'T TOUCH!"), HOT ("CAREFUL"), WARM ("warm"), COLD ("coooooool");
 		private String value;
 		
 		Temperature(String value_){
@@ -27,18 +27,18 @@ public class Burner {
 		switch(mySetting){
 			case OFF:
 				mySetting = Setting.LOW;
-				this.timer = TIME_DURATION;
 				break;
 			case LOW:
 				mySetting = Setting.MEDIUM;
-				this.timer = TIME_DURATION;
 				break;
 			case MEDIUM:
 				mySetting = Setting.HIGH;
-				this.timer = TIME_DURATION;
 				break;
 			default:
 				//do nothing
+		}
+		if(this.timer == 0){
+			this.timer = TIME_DURATION;
 		}
 	}
 	public void minusButton(){
@@ -73,6 +73,7 @@ public class Burner {
 				myTemperature = Temperature.BLAZING;
 				break;
 			default:
+				break;
 				//do nothing
 		}
 	}
@@ -88,6 +89,7 @@ public class Burner {
 					myTemperature = Temperature.COLD;
 					break;
 				default:
+					break;
 					//do nothing
 			}
 		}
@@ -97,10 +99,9 @@ public class Burner {
 	//If it doesn't, check to see if it needs to get hotter or cooler
 	//then call plusTemp() or minusTemp()
 	public void updateTemperature(){
-		if(timer != 0){ //tick down timer if it's not run out
+		if(timer > 1){ //tick down timer if it's not run out
 			timer --;
-		}
-		else{
+		} else {
 			switch(mySetting){
 				case HIGH:
 					if(myTemperature != Temperature.BLAZING){
@@ -149,7 +150,7 @@ public class Burner {
 	}
 
 	public void display(){
-		System.out.println("[" + mySetting + "]" + "....." + myTemperature);
+		System.out.println("[" + mySetting + "]" + "....." + myTemperature + "   Timer: " + timer);
 	}
 	
 	public Temperature getTemp(){
