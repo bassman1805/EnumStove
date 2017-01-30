@@ -1,5 +1,16 @@
 public class Burner {
-	public enum Temperature{BLAZING, HOT, WARM, COLD};
+	public enum Temperature{
+		BLAZING ("VERY HOT! DON'T TOUCH!"), HOT ("CAREFUL"), WARM ("Warm"), COLD ("coooooool");
+		private String value;
+		
+		Temperature(String value_){
+			value = value_;
+		}
+		public String toString(){
+			return value;
+		}
+	
+	}
 	
 	public static final int TIME_DURATION = 2;
 	
@@ -16,12 +27,33 @@ public class Burner {
 		switch(mySetting){
 			case OFF:
 				mySetting = Setting.LOW;
+				this.timer = TIME_DURATION;
 				break;
 			case LOW:
 				mySetting = Setting.MEDIUM;
+				this.timer = TIME_DURATION;
 				break;
 			case MEDIUM:
 				mySetting = Setting.HIGH;
+				this.timer = TIME_DURATION;
+				break;
+			default:
+				//do nothing
+		}
+	}
+	public void minusButton(){
+		switch(mySetting){
+			case HIGH:
+				mySetting = Setting.MEDIUM;
+				this.timer = TIME_DURATION;
+				break;
+			case MEDIUM:
+				mySetting = Setting.LOW;
+				this.timer = TIME_DURATION;
+				break;
+			case LOW:
+				mySetting = Setting.OFF;
+				this.timer = TIME_DURATION;
 				break;
 			default:
 				//do nothing
@@ -44,7 +76,7 @@ public class Burner {
 				//do nothing
 		}
 	}
-		public void minusTemp(){
+	public void minusTemp(){
 			switch(myTemperature){
 				case BLAZING:
 					myTemperature = Temperature.HOT;
@@ -64,7 +96,6 @@ public class Burner {
 	//If it has, checks if the temp matches the setting
 	//If it doesn't, check to see if it needs to get hotter or cooler
 	//then call plusTemp() or minusTemp()
-	//then decide if timer needs to be reset
 	public void updateTemperature(){
 		if(timer != 0){ //tick down timer if it's not run out
 			timer --;
@@ -116,22 +147,9 @@ public class Burner {
 			}
 		}
 	}
-	
-	
-	public void minusButton(){
-		switch(mySetting){
-			case HIGH:
-				mySetting = Setting.MEDIUM;
-				break;
-			case MEDIUM:
-				mySetting = Setting.LOW;
-				break;
-			case LOW:
-				mySetting = Setting.OFF;
-				break;
-			default:
-				//do nothing
-		}
+
+	public void display(){
+		System.out.println("[" + mySetting + "]" + "....." + myTemperature);
 	}
 	
 	public Temperature getTemp(){
