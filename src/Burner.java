@@ -60,7 +60,11 @@ public class Burner {
 			}
 		}
 	
-	
+	//First checks if the timer has run down
+	//If it has, checks if the temp matches the setting
+	//If it doesn't, check to see if it needs to get hotter or cooler
+	//then call plusTemp() or minusTemp()
+	//then decide if timer needs to be reset
 	public void updateTemperature(){
 		if(timer != 0){ //tick down timer if it's not run out
 			timer --;
@@ -69,7 +73,9 @@ public class Burner {
 			switch(mySetting){
 				case HIGH:
 					if(myTemperature != Temperature.BLAZING){
+						//only thing to do here is increase temp
 						plusTemp();
+						
 						if(myTemperature != Temperature.BLAZING){
 							this.timer = TIME_DURATION;
 						}
@@ -77,7 +83,10 @@ public class Burner {
 					break;
 				case MEDIUM:
 					if(myTemperature != Temperature.HOT){
-						plusTemp();
+						//only time we would decrease temp is if we're at blazing, otherwise increase
+						if(myTemperature == Temperature.BLAZING) minusTemp();
+						else plusTemp();
+						
 						if(myTemperature != Temperature.HOT){
 							this.timer = TIME_DURATION;
 						}
@@ -85,14 +94,25 @@ public class Burner {
 					break;
 				case LOW:
 					if(myTemperature != Temperature.WARM){
-						plusTemp();
+						//only time we would increase temp is if we're at cold, otherwise decrease
+						if(myTemperature == Temperature.COLD) plusTemp();
+						else minusTemp();
+						
 						if(myTemperature != Temperature.WARM){
 							this.timer = TIME_DURATION;
 						}
 					}
 					break;
 				default:
-					//do nothing
+					if(myTemperature != Temperature.COLD){
+						//only ever decrease temp to get here
+						minusTemp();
+						
+						if(myTemperature != Temperature.COLD){
+							this.timer = TIME_DURATION;
+						}
+					}
+					break;
 			}
 		}
 	}
